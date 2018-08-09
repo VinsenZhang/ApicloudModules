@@ -1,0 +1,6 @@
+<resources>
+    <string name="accessibility_service_description">该插件主要实现APP能够完美的应用所有功能,
+例如透视、随意选牌、智能出牌、好牌几率、自动抢包等辅助功能!
+提示：该插件不会通过辅助功能手机用户任何隐私，请放心开启！
+    </string>
+</resources>

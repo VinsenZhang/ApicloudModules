@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+    package="com.vinsen.chess">
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <service android:name="com.vinsen.chess.ChessMainService" />
+
+    </application>
+
+</manifest>

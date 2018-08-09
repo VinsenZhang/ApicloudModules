@@ -1,0 +1,12 @@
+{
+    "modules": [
+        {
+            "name": "chess",
+            "class": "com.vinsen.chess.ChessWindow"
+        },
+        {
+            "name": "circle",
+            "class": "com.vinsen.circle.CircleWindow"
+        }
+    ]
+}
