@@ -78,7 +78,7 @@ public class ChessWindow extends UZModule {
 
     private ChessMainService chessMainService;
 
-    private OnChessConfirmResult onChessConfirmResult = new OnChessConfirmResult() {
+    private OnChessConfirmResult confirmResult = new OnChessConfirmResult() {
 
         @Override
         public void onResult(JSONObject json) {
@@ -95,7 +95,7 @@ public class ChessWindow extends UZModule {
 
             if (service instanceof ChessMainService.ServiceBinder) {
                 chessMainService = ((ChessMainService.ServiceBinder) service).getService();
-                chessMainService.setResultListener(onChessConfirmResult);
+                chessMainService.setResultListener(confirmResult);
             }
         }
 

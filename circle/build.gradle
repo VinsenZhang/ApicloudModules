@@ -6,7 +6,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 9
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -23,5 +23,27 @@ android {
 }
 
 dependencies {
-    implementation files('../app/libs/apiEngine v1.1.0.jar')
+    compileOnly files('../app/libs/apiEngine v1.1.0.jar')
+}
+
+
+task jarCircle(type: Jar, dependsOn: ['build']) {
+    archiveName = 'circle.jar'
+    from('build/intermediates/classes/release')
+    destinationDir = file('build/libs')
+    exclude('android')//去掉android这个文件夹
+    exclude('com/smarter/mylibrary/BuildConfig.class')
+    exclude('com/smarter/mylibrary/BuildConfig\$*.class')
+    exclude('**/R.class')
+    exclude('**/R\$*.class')
+    manifest {
+        attributes(
+                'Implementation-Title': "${project.name}",
+                'Implementation-Version': "${version}",
+                'Built-Date': new Date().getDateTimeString(),
+                'Built-With':
+                        "gradle-${project.getGradle().getGradleVersion()},groovy-${GroovySystem.getVersion()}",
+                'Created-By':
+                        'Java ' + System.getProperty('java.version') + ' (' + System.getProperty('java.vendor') + ')')
+    }
 }

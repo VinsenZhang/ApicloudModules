@@ -22,9 +22,9 @@ import org.json.JSONObject;
 public class CircleWindow extends UZModule {
 
 
-    private UZModuleContext jsCallBack;
+    private UZModuleContext circleClickJsallBack;
 
-    private static final int CHESS_SYSTEM_ALERT_WINDOW = 100001;
+    private static final int CIRCLE_SYSTEM_ALERT_WINDOW = 100002;
 
 
     public CircleWindow(UZWebView webView) {
@@ -37,7 +37,7 @@ public class CircleWindow extends UZModule {
 
     public void jsmethod_showFloatCircle(UZModuleContext uzModuleContext) {
         //UZResourcesIDFinder.init(activity().getApplication());
-        this.jsCallBack = uzModuleContext;
+        this.circleClickJsallBack = uzModuleContext;
         this.circleContent = uzModuleContext.optString("circleContent");
         checkPermissions();
     }
@@ -63,7 +63,7 @@ public class CircleWindow extends UZModule {
             if (!Settings.canDrawOverlays(activity())) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + activity().getPackageName()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityForResult(intent, CHESS_SYSTEM_ALERT_WINDOW);
+                startActivityForResult(intent, CIRCLE_SYSTEM_ALERT_WINDOW);
                 return;
             } else {
                 showFloatCircle();
@@ -77,8 +77,8 @@ public class CircleWindow extends UZModule {
     private View.OnClickListener onCircleClickListenner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (jsCallBack == null) return;
-            jsCallBack.success(new JSONObject(), false);
+            if (circleClickJsallBack == null) return;
+            circleClickJsallBack.success(new JSONObject(), false);
         }
     };
 
@@ -89,7 +89,7 @@ public class CircleWindow extends UZModule {
 
             if (service instanceof FloatCircleService.CircleServiceBinder) {
                 chessCircle = ((FloatCircleService.CircleServiceBinder) service).getService();
-                chessCircle.setResultListener(onCircleClickListenner);
+                chessCircle.setCircleClickListener(onCircleClickListenner);
             }
         }
 
@@ -102,7 +102,7 @@ public class CircleWindow extends UZModule {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CHESS_SYSTEM_ALERT_WINDOW) {
+        if (requestCode == CIRCLE_SYSTEM_ALERT_WINDOW) {
             if (Build.VERSION.SDK_INT >= 23) {
                 if (!Settings.canDrawOverlays(activity())) {
                     Toast.makeText(activity(), "授权失败，检查是否授权成功", Toast.LENGTH_LONG).show();

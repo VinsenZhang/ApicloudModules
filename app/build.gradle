@@ -8,8 +8,8 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,7 +38,7 @@ repositories{
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('libs/apiEngine v1.1.0.jar')
+    compileOnly files('libs/apiEngine v1.1.0.jar')
     implementation project(':chess')
     implementation project(':circle')
 }

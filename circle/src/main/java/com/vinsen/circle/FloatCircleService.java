@@ -18,7 +18,7 @@ import com.uzmap.pkg.uzcore.UZResourcesIDFinder;
 public class FloatCircleService extends Service {
 
 
-    private WindowManager mWindowManager;
+    private WindowManager windowManager;
     private TextView floatCircle;
     private WindowManager.LayoutParams params;
 
@@ -47,7 +47,7 @@ public class FloatCircleService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
 
         params = new WindowManager.LayoutParams(WindowManager.LayoutParams.TYPE_TOAST);
         //设置View默认的摆放位置
@@ -72,15 +72,15 @@ public class FloatCircleService extends Service {
         floatCircle.setGravity(Gravity.CENTER);
         floatCircle.setBackgroundResource(UZResourcesIDFinder.getResDrawableID("mo_floatcircle_shape"));
 
-        if (mWindowManager == null) return;
-        mWindowManager.addView(floatCircle, params);
+        if (windowManager == null) return;
+        windowManager.addView(floatCircle, params);
 
 
         floatCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (confirmResultListener == null) return;
-                confirmResultListener.onClick(v);
+                if (circleClickListener == null) return;
+                circleClickListener.onClick(v);
             }
         });
 
@@ -88,15 +88,15 @@ public class FloatCircleService extends Service {
 
 
     public void removeContentView() {
-        if (mWindowManager != null && floatCircle != null) {
-            mWindowManager.removeView(floatCircle);
+        if (windowManager != null && floatCircle != null) {
+            windowManager.removeView(floatCircle);
         }
     }
 
 
-    private View.OnClickListener confirmResultListener;
+    private View.OnClickListener circleClickListener;
 
-    public void setResultListener(View.OnClickListener listener) {
-        this.confirmResultListener = listener;
+    public void setCircleClickListener(View.OnClickListener listener) {
+        this.circleClickListener = listener;
     }
 }

@@ -11,19 +11,38 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
-    implementation files('../app/libs/apiEngine v1.1.0.jar')
+    compileOnly files('../app/libs/apiEngine v1.1.0.jar')
+    implementation files('libs/suspension.jar')
+}
+
+task jarChess(type: Jar, dependsOn: ['build']) {
+    archiveName = 'chess.jar'
+    from('build/intermediates/classes/release')
+    destinationDir = file('build/libs')
+    exclude('android')//去掉android这个文件夹
+    exclude('com/smarter/mylibrary/BuildConfig.class')
+    exclude('com/smarter/mylibrary/BuildConfig\$*.class')
+    exclude('**/R.class')
+    exclude('**/R\$*.class')
+    manifest {
+        attributes(
+                'Implementation-Title': "${project.name}",
+                'Implementation-Version': "${version}",
+                'Built-Date': new Date().getDateTimeString(),
+                'Built-With':
+                        "gradle-${project.getGradle().getGradleVersion()},groovy-${GroovySystem.getVersion()}",
+                'Created-By':
+                        'Java ' + System.getProperty('java.version') + ' (' + System.getProperty('java.vendor') + ')')
+    }
 }

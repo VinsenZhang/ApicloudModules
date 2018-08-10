@@ -250,10 +250,10 @@ public class ChessMainService extends Service {
             JSONObject json = new JSONObject();
             try {
                 json.put("result", array.toString());
-                confirmResultListener.onResult(json);
+                resultListener.onResult(json);
             } catch (JSONException e) {
                 e.printStackTrace();
-                confirmResultListener.onResult(new JSONObject());
+                resultListener.onResult(new JSONObject());
             }
 
             removeContentView();
@@ -261,10 +261,10 @@ public class ChessMainService extends Service {
         }
     };
 
-    private OnChessConfirmResult confirmResultListener;
+    private OnChessConfirmResult resultListener;
 
     public void setResultListener(OnChessConfirmResult listener) {
-        this.confirmResultListener = listener;
+        this.resultListener = listener;
     }
 
     public void removeContentView() {
