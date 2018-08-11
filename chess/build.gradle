@@ -31,8 +31,6 @@ task jarChess(type: Jar, dependsOn: ['build']) {
     from('build/intermediates/classes/release')
     destinationDir = file('build/libs')
     exclude('android')//去掉android这个文件夹
-    exclude('com/smarter/mylibrary/BuildConfig.class')
-    exclude('com/smarter/mylibrary/BuildConfig\$*.class')
     exclude('**/R.class')
     exclude('**/R\$*.class')
     manifest {

@@ -1,5 +1,6 @@
 package com.vinsen.circle;
 
+import android.app.AppOpsManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -39,6 +40,7 @@ public class FloatCircleService extends Service {
         if (intent != null) {
             circleContent = intent.getStringExtra("circleContent");
         }
+
         return new CircleServiceBinder();
     }
 
@@ -53,9 +55,16 @@ public class FloatCircleService extends Service {
         //设置View默认的摆放位置
         params.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
         //设置window type
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // android 8
             params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-        } else {
+        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
+            // android 7.1
+            params.type = WindowManager.LayoutParams.TYPE_PHONE;
+        }  else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // android 4.4 ~ 8
+            params.type = WindowManager.LayoutParams.TYPE_TOAST;
+        }else {
             params.type = WindowManager.LayoutParams.TYPE_PHONE;
         }
         //设置背景为透明
