@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -70,7 +71,7 @@ public class ChessAdapter extends BaseAdapter {
             holder = (ChessItemHolder) convertView.getTag();
         }
 
-        convertView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+        convertView.setLayoutParams(new AbsListView.LayoutParams(width, height));
         ChessBean chessBean = mDatas.get(position);
         if (chessBean.isFace()) {
             holder.chessAdapterItemImg.setImageResource(chessBean.getIconRes());

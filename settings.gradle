@@ -1,1 +1,1 @@
-include ':app', ':moduleAcb',':chess', ':circle'
+include ':app', ':moduleAcb',':chess', ':circle', ':select'
