@@ -23,7 +23,6 @@ android {
 
 dependencies {
     compileOnly files('../app/libs/apiEngine v1.1.0.jar')
-    implementation files('libs/suspension.jar')
 }
 
 task jarChess(type: Jar, dependsOn: ['build']) {

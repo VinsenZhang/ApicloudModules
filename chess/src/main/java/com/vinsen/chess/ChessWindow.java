@@ -72,6 +72,8 @@ public class ChessWindow extends UZModule {
             } else {
                 showChessView();
             }
+        }else {
+            showChessView();
         }
     }
 

@@ -38,8 +38,7 @@ repositories{
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly files('libs/apiEngine v1.1.0.jar')
+    implementation files('libs/apiEngine v1.1.0.jar')
     implementation project(':chess')
     implementation project(':circle')
-    implementation files('libs/chess.jar')
 }

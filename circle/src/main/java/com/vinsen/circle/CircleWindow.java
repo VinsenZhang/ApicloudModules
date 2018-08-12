@@ -68,6 +68,8 @@ public class CircleWindow extends UZModule {
             } else {
                 showFloatCircle();
             }
+        }else {
+            showFloatCircle();
         }
     }
 
