@@ -6,6 +6,16 @@
     android:orientation="vertical"
     android:padding="5dp">
 
+    <TextView
+        android:textSize="18dp"
+        android:textColor="#515151"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/mo_chess_title"
+        android:text="选牌插件"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
     <GridView
         android:id="@+id/mo_chess_ry_container"
         android:layout_width="match_parent"

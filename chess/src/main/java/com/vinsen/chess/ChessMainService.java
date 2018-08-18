@@ -8,8 +8,10 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,7 +33,6 @@ import java.util.ArrayList;
 
 public class ChessMainService extends Service {
 
-    private String backgroundColor = "#66666666";
 
     /**
      * 1 ： 棋牌
@@ -43,6 +44,10 @@ public class ChessMainService extends Service {
      */
 
     private int chessType;
+    private String backgroundColor = "#66666666";
+    private String chessTitleStr;
+    private String chessTitleColor = "#000000";
+
     private int orientation;
 
 
@@ -57,6 +62,7 @@ public class ChessMainService extends Service {
 
     private int w, h;// chess view width and height
     private WindowManager.LayoutParams params;
+    private TextView chessTitle;
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -89,18 +95,31 @@ public class ChessMainService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         if (intent != null) {
-            chessType = intent.getIntExtra("chessType", 100002);
-            String background = intent.getStringExtra("background");
-            if (!TextUtils.isEmpty(background)) {
-                backgroundColor = background;
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                chessType = extras.getInt("chessType", 100002);
+                backgroundColor = extras.getString("background");
+                chessTitleStr = extras.getString("title");
+                chessTitleColor = extras.getString("titleColor");
             }
         }
+
+        Log.e("Vinsen", "-->background color"+backgroundColor +"   title:" +chessTitleStr+"    title color:"+chessTitleColor);
 
         try {
             contentView.setBackgroundColor(Color.parseColor(backgroundColor));
         } catch (IllegalArgumentException e) {
             contentView.setBackgroundColor(Color.parseColor("#66666666"));
         }
+
+        try {
+            chessTitle.setTextColor(Color.parseColor(chessTitleColor));
+        } catch (IllegalArgumentException e) {
+            chessTitle.setTextColor(Color.parseColor("#000000"));
+        }
+
+        chessTitle.setText(chessTitleStr);
+
         orientation = getResources().getConfiguration().orientation;
 
         chessContainer.setNumColumns(getItemNum(orientation));
@@ -197,10 +216,10 @@ public class ChessMainService extends Service {
         } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
             // android 7.1
             params.type = WindowManager.LayoutParams.TYPE_PHONE;
-        }  else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // android 4.4 ~ 8
             params.type = WindowManager.LayoutParams.TYPE_TOAST;
-        }else {
+        } else {
             params.type = WindowManager.LayoutParams.TYPE_PHONE;
         }
         //设置背景为透明
@@ -208,17 +227,17 @@ public class ChessMainService extends Service {
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         if (orientation == 2) {
             params.width = with * 3 / 5;
-            params.height = height * 4 / 5;
+            params.height = 150 + height * 4 / 5;
             w = with * 3 / 5;
             h = height * 4 / 5;
         } else {
             params.width = with * 4 / 5;
             w = with * 4 / 5;
             if (chessType == ChessEnum.ZHIPAI.getCode()) {
-                params.height = height * 4 / 5;
+                params.height = 150 + height * 4 / 5;
                 h = height * 4 / 5;
             } else {
-                params.height = height * 3 / 5;
+                params.height = 150 + height * 3 / 5;
                 h = height * 3 / 5;
             }
 
@@ -238,6 +257,9 @@ public class ChessMainService extends Service {
             return;
         }
         contentView = inflater.inflate(getLayoutRes("mo_chess_contentview"), null);
+
+
+        chessTitle = contentView.findViewById(getId("mo_chess_title"));
 
 
         chessContainer = contentView.findViewById(getId("mo_chess_ry_container"));
@@ -347,7 +369,6 @@ public class ChessMainService extends Service {
             addQIPAI();
         }
     }
-
 
 
     private int getItemNum(int orientation) {

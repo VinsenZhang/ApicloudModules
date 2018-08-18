@@ -4,10 +4,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.uzmap.pkg.uzcore.UZResourcesIDFinder;
@@ -33,20 +37,57 @@ public class ChessWindow extends UZModule {
 
     private int type = 100002;
 
-    private String background;
+    private String background = "#66666666";
+
+    private String title = getAppName(activity().getApplicationContext());
+
+    private String titleColor = "#515151";
 
     public void jsmethod_chooseChess(UZModuleContext uzModuleContext) {
-        //UZResourcesIDFinder.init(activity().getApplication());
         this.callBack = uzModuleContext;
-        this.type = uzModuleContext.optInt("type");
-        this.background = uzModuleContext.optString("background");
+
+        if (uzModuleContext.optInt("type") != 0){
+            this.type = uzModuleContext.optInt("type");
+        }
+
+        if (!TextUtils.isEmpty(uzModuleContext.optString("background"))){
+            this.background = uzModuleContext.optString("background");
+        }
+
+        if (!TextUtils.isEmpty(uzModuleContext.optString("title"))){
+            this.title = uzModuleContext.optString("title");
+        }
+
+        if (!TextUtils.isEmpty(uzModuleContext.optString("titleColor"))){
+            this.titleColor = uzModuleContext.optString("titleColor");
+        }
+
         checkPermissions();
     }
 
+
+    private static String getAppName(Context context) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(
+                    context.getPackageName(), 0);
+            int labelRes = packageInfo.applicationInfo.labelRes;
+            return context.getResources().getString(labelRes);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "随便选牌";
+    }
+
+
     private void showChessView() {
         Intent intent = new Intent(context(), ChessMainService.class);
-        intent.putExtra("chessType", type);
-        intent.putExtra("background", background);
+        Bundle bundle = new Bundle();
+        bundle.putInt("chessType", type);
+        bundle.putString("background", background);
+        bundle.putString("title", title);
+        bundle.putString("titleColor", titleColor);
+        intent.putExtras(bundle);
         activity().bindService(intent, connection, Context.BIND_AUTO_CREATE);
 
     }
@@ -72,7 +113,7 @@ public class ChessWindow extends UZModule {
             } else {
                 showChessView();
             }
-        }else {
+        } else {
             showChessView();
         }
     }
