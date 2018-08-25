@@ -264,9 +264,13 @@ public class SelectWindow extends Service {
 
         checkBox.setText(value);
 
-        checkBox.setTextColor(Color.parseColor("#ffffff"));
+        checkBox.setPadding(20 ,0, 20, 0);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, -2);
+        checkBox.setTextColor(color);
+
+        checkBox.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -2);
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -282,7 +286,7 @@ public class SelectWindow extends Service {
             }
         });
 
-        params.setMargins(0, 5, 0, 5);
+        params.setMargins(40, 5, 40, 5);
 
         itemContainer.addView(checkBox, params);
 
@@ -294,9 +298,12 @@ public class SelectWindow extends Service {
 
         sh.setText(value);
 
-        sh.setTextColor(Color.parseColor("#ffffff"));
+        sh.setTextColor(color);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, -2);
+        sh.setPadding(20 ,0, 20, 0);
+
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -2);
 
         sh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -312,12 +319,14 @@ public class SelectWindow extends Service {
             }
         });
 
-        params.setMargins(0, 5, 0, 5);
+        params.setMargins(40, 5, 40, 5);
 
         itemContainer.addView(sh, params);
 
     }
 
+
+    int color = Color.parseColor("#ffffff");
 
     private void addEditText(final String name, String value) {
 
@@ -327,7 +336,8 @@ public class SelectWindow extends Service {
         editText.setFocusableInTouchMode(true);
         editText.setClickable(true);
 
-        editText.setTextColor(Color.parseColor("#ffffff"));
+        editText.setTextColor(color);
+
 
         editText.setHint(value);
 
@@ -354,9 +364,10 @@ public class SelectWindow extends Service {
             }
         });
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, -2);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -2);
 
-        params.setMargins(0, 5, 0, 5);
+        params.setMargins(40, 5, 40, 5);
+        editText.setPadding(20, 0,20, 0);
 
         itemContainer.addView(editText, params);
 
@@ -368,6 +379,7 @@ public class SelectWindow extends Service {
         final RadioGroup radioGroup = new RadioGroup(this);
 
         radioGroup.setOrientation(RadioGroup.VERTICAL);
+        radioGroup.setPadding(20, 0, 20, 0);
 
 
         try {
@@ -376,9 +388,14 @@ public class SelectWindow extends Service {
 
                 RadioButton radioButton = new RadioButton(this);
 
-                radioButton.setTextColor(Color.parseColor("#ffffff"));
+                radioButton.setTextColor(color);
 
-                radioGroup.addView(radioButton);
+                radioButton.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
+
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -2);
+
+                radioGroup.addView(radioButton, params);
 
                 radioButton.setText(valueJson.getString("value"));
             }
@@ -404,9 +421,9 @@ public class SelectWindow extends Service {
         });
 
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, -2);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -2);
 
-        params.setMargins(0, 5, 0, 5);
+        params.setMargins(40, 5, 40, 5);
 
         itemContainer.addView(radioGroup, params);
 
@@ -416,6 +433,7 @@ public class SelectWindow extends Service {
     private void addSpinner(final String name, JSONArray options) {
 
         Spinner spinner = new Spinner(this);
+        spinner.setPadding(20, 0, 20, 0);
 
         final String[] arr = new String[options.length()];
 
@@ -456,7 +474,7 @@ public class SelectWindow extends Service {
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-1, -2);
 
-        params.setMargins(30, 5, 0, 5);
+        params.setMargins(40, 5, 40, 5);
 
         itemContainer.addView(spinner, params);
 
