@@ -104,8 +104,6 @@ public class ChessMainService extends Service {
             }
         }
 
-        Log.e("Vinsen", "-->background color"+backgroundColor +"   title:" +chessTitleStr+"    title color:"+chessTitleColor);
-
         try {
             contentView.setBackgroundColor(Color.parseColor(backgroundColor));
         } catch (IllegalArgumentException e) {

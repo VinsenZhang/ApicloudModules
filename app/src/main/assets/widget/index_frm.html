@@ -14,67 +14,101 @@
     		color:#999;
     		padding:5px;
     	}
+
+
     </style>
     <script type="text/javascript">
 	    
-		var moduleChess = null;
-		var floatCircle = null;
+		var selectModule = null;
 
 		apiready = function(){
-	    	moduleChess = api.require('chess');
-	    	floatCircle = api.require('circle');
+	    	selectModule = api.require('select');
 	    }
 	    
 
 		
-		function choseChess1(){
-			 var param = {type:100001,title:"棋牌插件11111",titleColor:"#aaffaa"};
+		function chooseChess(){
+		var json = {
+    "items":[
+        {
+            "type":"input",
+            "name":"input",
+            "value":"请输入"
+        },
+        {
+            "type":"checkbox",
+            "name":"checkbox",
+            "value":"hehe"
+        },
+        {
+            "type":"switch",
+            "name":"switch" ,
+            "value":"hehe"
+        },{
+            "type":"switch",
+            "name":"switch",
+            "value":"hehe"
+        },{
+            "type":"switch",
+            "name":"switch",
+            "value":"hehe"
+        },
+        {
+            "type":"radio",
+            "name":"radio",
+            "values":[
+                {
+                    "value":"1"
+                },
+                {
+                    "value":"2"
+                },
+                {
+                    "value":"3"
+                },
+                {
+                    "value":"4"
+                },
+                {
+                    "value":"5"
+                }
+            ]
+        },
+        {
+            "type":"select",
+            "name":"select",
+            "values":[
+                {
+                    "value":"1"
+                },
+                {
+                    "value":"2"
+                },
+                {
+                    "value":"3"
+                },
+                {
+                    "value":"4"
+                },
+                {
+                    "value":"5"
+                }
+            ]
+        }
+    ]
+};
+			var param = {params:json};
 			var resultCallback = function(ret, err){
 				document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
 			}
-	        moduleChess.chooseChess(param, resultCallback);
+	        selectModule.choose(param, resultCallback);
 		}
 
-		function choseChess2(){
-			var param = {type:100002};
-			var resultCallback = function(ret, err){
-				document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
-			}
-	        moduleChess.chooseChess(param, resultCallback);
-		}
-
-		function choseChess3(){
-			var param = {type:100003};
-			var resultCallback = function(ret, err){
-				document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
-			}
-	        moduleChess.chooseChess(param, resultCallback);
-		}
-
-		function choseChess4(){
-			var param = {type:100004};
-			var resultCallback = function(ret, err){
-				document.getElementById("activity_result").innerHTML = JSON.stringify(ret);
-			}
-	        moduleChess.chooseChess(param, resultCallback);
+		function closeChess(){
+	        selectModule.close();
 		}
 
 
-        function closeChess(){
-	        moduleChess.closeChess();
-		}
-
-
-		function showFloatCircle(){
-			var param = {};
-			var resultCallback = function(ret, err){
-				 choseChess1();
-			}
-	        floatCircle.showFloatCircle(param, resultCallback);
-		}
-		function closeFloatCircle(){
-	        floatCircle.closeFloatCircle();
-		}
 
 
     </script>
@@ -83,15 +117,10 @@
 <div id="wrap">
     <div id="main">
         <br>
-        <div class='itemtitle'>1、选牌插件,每次选不同的牌类型，需要杀死当前的应用</div>
+        <div class='itemtitle'>不知道叫什么好~</div>
         <!--<div class="clickbtn" tapmode="active" onclick="choseChess()">选牌</div>-->
-        <div class="clickbtn" tapmode="active" onclick="closeChess()">关闭 棋～牌</div>
-        <div class="clickbtn" tapmode="active" onclick="choseChess1()">棋牌</div>
-        <div class="clickbtn" tapmode="active" onclick="choseChess2()">麻将</div>
-        <div class="clickbtn" tapmode="active" onclick="choseChess3()">纸牌</div>
-        <div class="clickbtn" tapmode="active" onclick="choseChess4()">牌</div>
-        <div class="clickbtn" tapmode="active" onclick="showFloatCircle()">显示悬浮圆</div>
-        <div class="clickbtn" tapmode="active" onclick="closeFloatCircle()">关闭悬浮圆</div>
+        <div class="clickbtn" tapmode="active" onclick="chooseChess()">选择</div>
+        <div class="clickbtn" tapmode="active" onclick="closeChess()">关闭</div>
 
         <div id="activity_result"
              style="width:100%;word-wrap: break-word;word-break: normal;"></div>
