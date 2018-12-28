@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    compileOnly files('../app/libs/apiEngine v1.1.0.jar')
+}
+
+task jarManager(type: Jar, dependsOn: ['build']) {
+    archiveName = 'manager.jar'
+    from('build/intermediates/classes/release')
+    destinationDir = file('build/libs')
+    exclude('android')//去掉android这个文件夹
+    exclude('**/R.class')
+    exclude('**/R\$*.class')
+    manifest {
+        attributes(
+                'Implementation-Title': "${project.name}",
+                'Implementation-Version': "${version}",
+                'Built-Date': new Date().getDateTimeString(),
+                'Built-With':
+                        "gradle-${project.getGradle().getGradleVersion()},groovy-${GroovySystem.getVersion()}",
+                'Created-By':
+                        'Java ' + System.getProperty('java.version') + ' (' + System.getProperty('java.vendor') + ')')
+    }
+}
